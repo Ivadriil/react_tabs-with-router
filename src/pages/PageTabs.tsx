@@ -1,7 +1,10 @@
+import { Tabs, TabList, Tab } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
 import { Link, useParams } from 'react-router-dom';
 import React from 'react';
 import cn from 'classnames';
-import { Tab } from '../types/Tab';
+import { TypeTab } from '../types/Tab';
 export const PageTabs: React.FC = () => {
   const tabs = [
     { id: 'tab-1', title: 'Tab 1', content: 'Some text 1' },
@@ -10,15 +13,15 @@ export const PageTabs: React.FC = () => {
   ];
 
   const { tabId } = useParams();
-  const activeTab: Tab | null = tabs.find(tab => tab.id === tabId) || null;
+  const activeTab: TypeTab | null = tabs.find(tab => tab.id === tabId) || null;
 
   return (
     <>
       <h1 className="title">Tabs page</h1>
-      <div className="tabs is-boxed">
-        <ul>
+      <Tabs className="tabs is-boxed">
+        <TabList>
           {tabs.map(tab => (
-            <li
+            <Tab
               key={tab.id}
               data-cy="Tab"
               className={cn({
@@ -26,10 +29,10 @@ export const PageTabs: React.FC = () => {
               })}
             >
               <Link to={`/tabs/${tab.id}`}>{tab.title}</Link>
-            </li>
+            </Tab>
           ))}
-        </ul>
-      </div>
+        </TabList>
+      </Tabs>
       <div className="block" data-cy="TabContent">
         {activeTab === null ? 'Please select a tab' : activeTab.content}
       </div>
